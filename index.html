@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorpresa Sottomarina</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:ital@1&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* Sfondo Acqua Animato - Gradiente profondo */
+        body,
+        html {
+            min-height: 100vh;
+            /* Cambiato da height: 100% */
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(180deg, #012a4a, #013a63, #014f86, #2a6f97);
+            background-size: 400% 400%;
+            animation: oceanFlow 15s ease infinite;
+            /* overflow: hidden; <- ELIMINA QUESTA RIGA! */
+            color: white;
+        }
+
+        /* Movimento dell'acqua */
+        @keyframes oceanFlow {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Generatore di Bolle CSS */
+        .bubbles {
+            position: fixed;
+            /* Cambiato da absolute a fixed */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            animation: floatup 10s infinite ease-in;
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Posizioni e grandezze randomiche per le bolle */
+        .bubble:nth-child(1) {
+            width: 40px;
+            height: 40px;
+            left: 10%;
+            animation-duration: 8s;
+        }
+
+        .bubble:nth-child(2) {
+            width: 20px;
+            height: 20px;
+            left: 20%;
+            animation-duration: 5s;
+            animation-delay: 1s;
+        }
+
+        .bubble:nth-child(3) {
+            width: 50px;
+            height: 50px;
+            left: 35%;
+            animation-duration: 12s;
+            animation-delay: 2s;
+        }
+
+        .bubble:nth-child(4) {
+            width: 30px;
+            height: 30px;
+            left: 50%;
+            animation-duration: 7s;
+            animation-delay: 0s;
+        }
+
+        .bubble:nth-child(5) {
+            width: 60px;
+            height: 60px;
+            left: 65%;
+            animation-duration: 10s;
+            animation-delay: 3s;
+        }
+
+        .bubble:nth-child(6) {
+            width: 15px;
+            height: 15px;
+            left: 80%;
+            animation-duration: 6s;
+            animation-delay: 1.5s;
+        }
+
+        .bubble:nth-child(7) {
+            width: 45px;
+            height: 45px;
+            left: 90%;
+            animation-duration: 9s;
+            animation-delay: 4s;
+        }
+
+        .bubble:nth-child(8) {
+            width: 25px;
+            height: 25px;
+            left: 55%;
+            animation-duration: 6.5s;
+            animation-delay: 2.5s;
+        }
+
+        @keyframes floatup {
+            0% {
+                transform: translateY(0) translateX(0) scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-1200px) translateX(30px) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* UI in primo piano */
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            /* Cambiato da height: 100vh */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 0;
+            /* Aggiunto padding per non far toccare i bordi */
+        }
+
+        /* Effetto Glassmorphism */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            /* Per Safari */
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transform: translateY(20px);
+            animation: fadeInCard 1.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInCard {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            color: #f8f9fa;
+        }
+
+        .subtitle {
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #caf0f8;
+        }
+
+        .highlight-text {
+            color: #90e0ef;
+            font-weight: bold;
+        }
+
+        /* Contenitore verticale (es: 9:16 per mobile) */
+        .video-hero-container {
+            width: 100%;
+            position: relative;
+            /* Definisci l'aspect ratio verticale del contenitore.
+       Scegli: 9/16 (verticale stretto), 4/5 (verticale medio), o 1/1 (quadrato) */
+            aspect-ratio: 9/16;
+        }
+
+        /* Regole per il video che lo adattano */
+        .video-hero {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* IL SEGRETO: Riempie il box, taglia i lati, mantiene proporzioni */
+            object-fit: cover;
+            /* Opzionale: Se il video non è centrato bene,
+       puoi spostare il focus del ritaglio (es: 50% 50% è il centro) */
+            object-position: center center;
+        }
+
+        /* Animazione che fa "pulsare" i bottoni */
+        @keyframes pulseBadge {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+            }
+
+            50% {
+                transform: scale(1.08);
+                box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.2);
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+            }
+        }
+
+        /* Classe base per i bottoni cliccabili */
+        .badge-interactive {
+            position: relative;
+            overflow: hidden;
+            /* Trattiene l'onda dentro il bottone */
+            cursor: pointer;
+            user-select: none;
+            animation: pulseBadge 2s infinite;
+            /* Attiva la pulsazione */
+            transition: all 0.3s ease;
+        }
+
+        /* L'onda dell'acqua (generata poi dal JS) */
+        .water-ripple {
+            position: absolute;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.7);
+            pointer-events: none;
+            animation: rippleEffect 0.6s linear;
+        }
+
+        @keyframes rippleEffect {
+            0% {
+                width: 0px;
+                height: 0px;
+                opacity: 1;
+            }
+
+            100% {
+                width: 400px;
+                height: 400px;
+                opacity: 0;
+            }
+        }
+
+        /* --- IL BOTTONE LIQUIDO --- */
+        .btn-liquid {
+            position: relative;
+            padding: 16px 45px;
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #00b4d8, #0077b6, #03045e);
+            background-size: 200% 200%;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            /* La magia: crea una forma organica che non è un cerchio perfetto */
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            /* Uniamo due animazioni: il cambio di forma e il cambio di colore */
+            animation: morphWater 4s ease-in-out infinite, shiftOcean 3s ease infinite;
+            box-shadow: 0 8px 32px rgba(0, 180, 216, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Quando ci passa sopra o lo tocca */
+        .btn-liquid:hover,
+        .btn-liquid:active {
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(0, 180, 216, 0.7);
+            color: #ffffff;
+            /* Forza il bianco */
+        }
+
+        /* Animazione che fa mutare i bordi come se fosse liquido */
+        @keyframes morphWater {
+
+            0%,
+            100% {
+                border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            }
+
+            34% {
+                border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%;
+            }
+
+            67% {
+                border-radius: 100% 60% 60% 100% / 100% 100% 60% 60%;
+            }
+        }
+
+        /* Animazione che fa scorrere le sfumature blu */
+        @keyframes shiftOcean {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Animazione di comparsa per il bottone finale */
+        .fade-in-magic {
+            display: inline-block !important;
+            /* Forza la visualizzazione */
+            animation: appearMagic 1s ease-out forwards;
+        }
+
+        @keyframes appearMagic {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.8);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
+    <div class="content-wrapper container px-4">
+        <div class="glass-card col-12 col-md-8 col-lg-6 mx-auto" id="card1">
+            <h1 class="mb-4">Benvenuta negli abissi</h1>
+
+            <p class="mb-4 lead" style="font-size: 1.1rem;">
+                Hai toccato il punto più alto... ma per festeggiare come meriti, stasera scendiamo nel punto più
+                profondo di <b>Valencia</b>.
+            </p>
+
+            <div class="d-flex justify-content-center flex-wrap gap-2 mt-4" id="badges-container">
+
+                <span class="badge-interactive badge rounded-pill bg-light text-dark px-3 py-2 fw-normal shadow-sm"
+                    data-reveal="📍 Luogo: Oceanogràfic, Valencia">
+                    <span class="badge-text">📍 Clicca qui</span>
+                </span>
+
+                <span class="badge-interactive badge rounded-pill bg-light text-dark px-3 py-2 fw-normal shadow-sm"
+                    data-reveal="✨ Dress Code: Elegante">
+                    <span class="badge-text">✨ Clicca qui</span>
+                </span>
+
+                <span class="badge-interactive badge rounded-pill bg-light text-dark px-3 py-2 fw-normal shadow-sm"
+                    data-reveal="💳 Costo: Tutto incluso (spero -.-)">
+                    <span class="badge-text">💳 Clicca qui</span>
+                </span>
+
+            </div>
+
+            <hr style="border-color: rgba(255,255,255,0.2); margin: 2rem 0;">
+
+            <button id="nextBtn" class="btn-liquid mt-3 d-none">Scopri di più 🌊</button>
+        </div>
+
+        <div class="glass-card col-12 col-md-8 col-lg-6 mx-auto d-none" id="card2">
+            <p class="mb-4">
+                La tua prenotazione è confermata al <br>
+                <span class="highlight-text fs-4">Restaurante Submarino</span>
+            </p>
+
+            <div class="video-hero-container mb-4 rounded shadow-lg overflow-hidden">
+                <video src="submarino.mp4" autoplay muted loop playsinline class="video-hero"></video>
+            </div>
+        </div>
+
+        <script>
+            // 1. Inizializza il contatore
+            let badgesCliccati = 0;
+
+            document.querySelectorAll('.badge-interactive').forEach(button => {
+                button.addEventListener('click', function (e) {
+
+                    // --- Effetto Acqua (già presente) ---
+                    let x = e.clientX - e.target.getBoundingClientRect().left;
+                    let y = e.clientY - e.target.getBoundingClientRect().top;
+
+                    let ripples = document.createElement('span');
+                    ripples.style.left = x + 'px';
+                    ripples.style.top = y + 'px';
+                    ripples.classList.add('water-ripple');
+                    this.appendChild(ripples);
+
+                    let textSpan = this.querySelector('.badge-text');
+                    textSpan.innerText = this.getAttribute('data-reveal');
+
+                    this.classList.replace('bg-light', 'bg-info');
+                    this.classList.replace('text-dark', 'text-white');
+                    this.style.animation = 'none';
+
+                    setTimeout(() => { ripples.remove(); }, 600);
+
+                    // --- LA NUOVA MAGIA DELLO SBLOCCO ---
+                    // Controllo se questo bottone NON è ancora stato cliccato
+                    if (!this.classList.contains('gia-cliccato')) {
+
+                        this.classList.add('gia-cliccato'); // Lo marchiamo come cliccato
+                        badgesCliccati++; // Aumentiamo il contatore
+
+                        // Se ha cliccato tutti e 3 i bottoni, sblocca il finale!
+                        if (badgesCliccati === 3) {
+                            const bottoneFinale = document.getElementById('nextBtn');
+                            bottoneFinale.classList.remove('d-none');
+                            bottoneFinale.classList.add('fade-in-magic'); // Applica l'animazione di entrata
+                        }
+                    }
+                });
+            });
+
+            // Gestione del bottone liquido per passare alla seconda card
+            document.getElementById('nextBtn').addEventListener('click', function () {
+                document.getElementById('card1').classList.add('d-none');
+                document.getElementById('card2').classList.remove('d-none');
+            });
+        </script>
+
+    </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
